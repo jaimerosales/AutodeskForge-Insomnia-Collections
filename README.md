@@ -2,7 +2,7 @@
 
 
 ## Description
-Insomnia.REST workflow to use Autodesk Forge Data Management API Endpoints
+Insomnia.REST workflow to use Autodesk Forge API Endpoints
 
 ## Setup
 
