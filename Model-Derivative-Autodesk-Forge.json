@@ -1,0 +1,569 @@
+{
+	"_type": "export",
+	"__export_format": 3,
+	"__export_date": "2019-04-23T21:23:34.067Z",
+	"__export_source": "insomnia.desktop.app:v6.3.2",
+	"resources": [
+		{
+			"_id": "wrk_14c1f697d34048febda71a840938f842",
+			"created": 1556053141162,
+			"description": "",
+			"modified": 1556053141162,
+			"name": "Model Derivative - Autodesk Forge",
+			"parentId": null,
+			"_type": "workspace"
+		},
+		{
+			"_id": "env_3a6bcab676384c7a8f65f6c12d00994f",
+			"color": null,
+			"created": 1556053141316,
+			"data": {
+				"2_legged_token": "",
+				"authorization_token": "https://developer.api.autodesk.com/authentication/v1/gettoken",
+				"authorization_url": "https://developer.api.autodesk.com/authentication/v1/authorize",
+				"base_url": "https://developer.api.autodesk.com/",
+				"bucketKey": "",
+				"derivativeurn": "",
+				"forge_client_id": "",
+				"forge_client_secret": "",
+				"guid": "",
+				"redirect_url": "https://insomnia.rest/oauth/callback",
+				"scope_all": "data:read data:write data:create bucket:read bucket:update bucket:delete bucket:create viewables:read code:all",
+				"scope_bimhq": "data:read data:write data:create account:read account:write",
+				"scope_data": "data:read data:write data:create bucket:read bucket:create",
+				"scope_viewer": "viewables:read",
+				"urnBase64": ""
+			},
+			"isPrivate": false,
+			"metaSortKey": 1556053141316,
+			"modified": 1556054547049,
+			"name": "New Environment",
+			"parentId": "wrk_14c1f697d34048febda71a840938f842",
+			"_type": "environment"
+		},
+		{
+			"_id": "jar_488a75ffc5aa4cc5a519c51f1133ff71",
+			"cookies": [],
+			"created": 1556053141335,
+			"modified": 1556053141335,
+			"name": "Default Jar",
+			"parentId": "wrk_14c1f697d34048febda71a840938f842",
+			"_type": "cookie_jar"
+		},
+		{
+			"_id": "req_35f2aac4847d45a49b8bcc20a37e2345",
+			"authentication": {
+				"type": "bearer"
+			},
+			"body": {
+				"mimeType": "application/x-www-form-urlencoded",
+				"params": [
+					{
+						"id": "pair_742202f3c65d485082a08ee0ed132c2c",
+						"name": "client_id",
+						"value": "{{ forge_client_id  }}"
+					},
+					{
+						"id": "pair_66c176e099264a139a1e35712c6a5151",
+						"name": "client_secret",
+						"value": "{{ forge_client_secret  }}"
+					},
+					{
+						"id": "pair_305e3857827d495da20614b5ccd72bf3",
+						"name": "grant_type",
+						"value": "client_credentials"
+					},
+					{
+						"id": "pair_a7ff5aac989845379b08e99767ef86fd",
+						"name": "scope",
+						"value": "{{ scope_data  }}"
+					}
+				]
+			},
+			"created": 1556053178163,
+			"description": "Get a two-legged access token by providing your app’s client ID and secret.\nOnce you have the token copy to \"2_legged_token\" in your Environment. ",
+			"headers": [
+				{
+					"id": "pair_f71688179a914f2ca5c2a12d95eae977",
+					"name": "Content-Type",
+					"value": "application/x-www-form-urlencoded"
+				}
+			],
+			"isPrivate": false,
+			"metaSortKey": -1554920753151.5654,
+			"method": "POST",
+			"modified": 1556053195837,
+			"name": "2 Legged Token Authentication",
+			"parameters": [],
+			"parentId": "wrk_14c1f697d34048febda71a840938f842",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingMaxTimelineDataSize": 1000,
+			"settingRebuildPath": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "https://developer.api.autodesk.com/authentication/v1/authenticate",
+			"_type": "request"
+		},
+		{
+			"_id": "req_1779cf75b8f34311a99cb6b68bf1a84d",
+			"authentication": {
+				"token": "{{ 2_legged_token  }}",
+				"type": "bearer"
+			},
+			"body": {},
+			"created": 1556053243062,
+			"description": "Returns an up-to-date list of Forge-supported translations, that you can use to identify which types of derivatives are supported for each source file type. You can set this endpoint to only return the list of supported translations if they have been updated since a specified date.\n\nSee the Supported Translation Formats table for more details about supported translations.\n\nNote that we are constantly adding new file formats to the list of Forge translations.",
+			"headers": [],
+			"isPrivate": false,
+			"metaSortKey": -1554920753101.5654,
+			"method": "GET",
+			"modified": 1556053318227,
+			"name": "Formats",
+			"parameters": [],
+			"parentId": "wrk_14c1f697d34048febda71a840938f842",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingMaxTimelineDataSize": 1000,
+			"settingRebuildPath": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "https://developer.api.autodesk.com/modelderivative/v2/designdata/formats",
+			"_type": "request"
+		},
+		{
+			"_id": "req_180a4c8353d342fd8f7120fa1a6803cc",
+			"authentication": {
+				"token": "{{ 2_legged_token  }}",
+				"type": "bearer"
+			},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n         \"input\": {\n           \"urn\": \"{{ urnBase64 }}\",\n           \"compressedUrn\": true,\n           \"rootFilename\": \"A5.iam\"\n         },\n         \"output\": {\n           \"destination\": {\n             \"region\": \"us\"\n           },\n           \"formats\": [\n             {\n               \"type\": \"svf\",\n               \"views\": [\n                 \"2d\",\n                 \"3d\"\n               ]\n             }\n           ]\n         }\n       }"
+			},
+			"created": 1556053331579,
+			"description": "You can use this endpoint to do the following:\n\nTranslate a design from one format to another format.\nExtract selected parts of a design and export the set of geometries in OBJ format.\nGenerate different-sized thumbnails.\nFollow the step-by-step tutorials for detailed instructions on how to use this endpoint to translate files, extract geometries, and generate thumbnails.\n\nDerivatives are stored in a manifest that is updated each time this endpoint is used on a source file.\n\nNote that this endpoint is asynchronous and initiates a process that runs in the background. You need not keep the HTTP connection open until completion. Use the GET :urn/manifest endpoint to check for the job’s completion status.",
+			"headers": [
+				{
+					"id": "pair_2f63631c71da47f687261c1d18c59d47",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"isPrivate": false,
+			"metaSortKey": -1554920675913.1155,
+			"method": "POST",
+			"modified": 1556053643609,
+			"name": "Job",
+			"parameters": [],
+			"parentId": "wrk_14c1f697d34048febda71a840938f842",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingMaxTimelineDataSize": 1000,
+			"settingRebuildPath": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "\thttps://developer.api.autodesk.com/modelderivative/v2/designdata/job",
+			"_type": "request"
+		},
+		{
+			"_id": "req_a44bd55b700044ab9167959079c0794e",
+			"authentication": {
+				"token": "{{ 2_legged_token  }}",
+				"type": "bearer"
+			},
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n       \"urn\": \"urn:adsk.objects:os.object:modelderivative/A5.iam\",\n       \"region\": \"EMEA\",\n       \"filename\": \"A5.iam\",\n       \"references\": [{\n               \"urn\": \"urn:adsk.objects:os.object:modelderivative/01.ipt\",\n               \"relativePath\": \"refs/01.ipt\",\n               \"filename\": \"01.ipt\",\n               \"references\": [{\n                       \"urn\": \"urn:adsk.objects:os.object:modelderivative/011.ipt\",\n                       \"relativePath\": \"refs/subfolder/011.ipt\"\n               }]\n       },\n       {\n               \"urn\": \"urn:adsk.objects:os.object:modelderivative/02.ipt\",\n               \"relativePath\": \"x-refs/02.ipt\",\n               \"filename\": \"02.ipt\",\n               \"metadata\": {\n                       \"myField1\": \"Some Data1\",\n                       \"myField2\": \"Some Data2\",\n                       \"myField3\": \"Some Data3\"\n               }\n       }]\n      }"
+			},
+			"created": 1556053435226,
+			"description": "To create references for a composite design in Model Derivative. The description of references is stored in Model Derivative. To use it with the POST job endpoint, you need to set checkReferences to true.",
+			"headers": [
+				{
+					"id": "pair_2f63631c71da47f687261c1d18c59d47",
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"isPrivate": false,
+			"metaSortKey": -1554920637318.8906,
+			"method": "POST",
+			"modified": 1556053680425,
+			"name": "References",
+			"parameters": [],
+			"parentId": "wrk_14c1f697d34048febda71a840938f842",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingMaxTimelineDataSize": 1000,
+			"settingRebuildPath": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "\thttps://developer.api.autodesk.com/modelderivative/v2/designdata/{{ urnBase64 }}/references",
+			"_type": "request"
+		},
+		{
+			"_id": "req_06cac12e8f87434fa93bcd09f25ae20a",
+			"authentication": {
+				"token": "{{ 2_legged_token  }}",
+				"type": "bearer"
+			},
+			"body": {},
+			"created": 1556053697254,
+			"description": "Downloads the thumbnail for the source file.",
+			"headers": [],
+			"isPrivate": false,
+			"metaSortKey": -1554920637268.8906,
+			"method": "GET",
+			"modified": 1556053780228,
+			"name": "Thumbnail US",
+			"parameters": [],
+			"parentId": "wrk_14c1f697d34048febda71a840938f842",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingMaxTimelineDataSize": 1000,
+			"settingRebuildPath": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "https://developer.api.autodesk.com/modelderivative/v2/designdata/{{ urnBase64  }}/thumbnail",
+			"_type": "request"
+		},
+		{
+			"_id": "req_ba5f106060644220a880d227d9da2758",
+			"authentication": {
+				"token": "{{ 2_legged_token  }}",
+				"type": "bearer"
+			},
+			"body": {},
+			"created": 1556053743746,
+			"description": "Downloads the thumbnail for the source file.",
+			"headers": [],
+			"isPrivate": false,
+			"metaSortKey": -1554920617996.778,
+			"method": "GET",
+			"modified": 1556053774402,
+			"name": "Thumbnail EMEA",
+			"parameters": [],
+			"parentId": "wrk_14c1f697d34048febda71a840938f842",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingMaxTimelineDataSize": 1000,
+			"settingRebuildPath": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "https://developer.api.autodesk.com/modelderivative/v2/regions/eu/designdata/{{ urnBase64  }}/thumbnail",
+			"_type": "request"
+		},
+		{
+			"_id": "req_eae189902e6748148f03ffd3b3b9eb10",
+			"authentication": {
+				"token": "{{ 2_legged_token  }}",
+				"type": "bearer"
+			},
+			"body": {},
+			"created": 1556053818915,
+			"description": "Returns information about derivatives that correspond to a specific source file, including derviative URNs and statuses.\n\nThe URNs of the derivatives are used to download the generated derivatives when calling the GET :urn/manifest/:derivativeurn endpoint.\n\nThe statuses are used to verify whether the translation of requested output files is complete.\n\nNote that different output files might complete their translation processes at different times, and therefore may have different status values.\n\nWhen translating a source file a second time, the previously created manifest is not deleted; it appends the information (only new translations) to the manifest.",
+			"headers": [],
+			"isPrivate": false,
+			"metaSortKey": -1554920627632.8345,
+			"method": "GET",
+			"modified": 1556054438144,
+			"name": "Manifest US",
+			"parameters": [],
+			"parentId": "wrk_14c1f697d34048febda71a840938f842",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingMaxTimelineDataSize": 1000,
+			"settingRebuildPath": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "https://developer.api.autodesk.com/modelderivative/v2/designdata/{{ urnBase64  }}/manifest",
+			"_type": "request"
+		},
+		{
+			"_id": "req_7000ae899d6349c888bf93b49542e608",
+			"authentication": {
+				"token": "{{ 2_legged_token  }}",
+				"type": "bearer"
+			},
+			"body": {},
+			"created": 1556053860305,
+			"description": "Returns information about derivatives that correspond to a specific source file, including derviative URNs and statuses.\n\nThe URNs of the derivatives are used to download the generated derivatives when calling the GET :urn/manifest/:derivativeurn endpoint.\n\nThe statuses are used to verify whether the translation of requested output files is complete.\n\nNote that different output files might complete their translation processes at different times, and therefore may have different status values.\n\nWhen translating a source file a second time, the previously created manifest is not deleted; it appends the information (only new translations) to the manifest.",
+			"headers": [],
+			"isPrivate": false,
+			"metaSortKey": -1554920608335.7217,
+			"method": "GET",
+			"modified": 1556053887618,
+			"name": "Manifest EMEA",
+			"parameters": [],
+			"parentId": "wrk_14c1f697d34048febda71a840938f842",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingMaxTimelineDataSize": 1000,
+			"settingRebuildPath": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "https://developer.api.autodesk.com/modelderivative/v2/regions/eu/designdata/{{ urnBase64  }}/manifest",
+			"_type": "request"
+		},
+		{
+			"_id": "req_4878efa6bd074b839fc4187bf10e0c35",
+			"authentication": {
+				"token": "{{ 2_legged_token  }}",
+				"type": "bearer"
+			},
+			"body": {},
+			"created": 1556053904651,
+			"description": "Deletes the manifest and all its translated output files (derivatives). However, it does not delete the design source file.",
+			"headers": [],
+			"isPrivate": false,
+			"metaSortKey": -1554920622814.8062,
+			"method": "DELETE",
+			"modified": 1556054440407,
+			"name": "Manifest US",
+			"parameters": [],
+			"parentId": "wrk_14c1f697d34048febda71a840938f842",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingMaxTimelineDataSize": 1000,
+			"settingRebuildPath": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "https://developer.api.autodesk.com/modelderivative/v2/designdata/{{ urnBase64  }}/manifest",
+			"_type": "request"
+		},
+		{
+			"_id": "req_2ed0db81017d406fb0b72ab846ad9659",
+			"authentication": {
+				"token": "{{ 2_legged_token  }}",
+				"type": "bearer"
+			},
+			"body": {},
+			"created": 1556053923949,
+			"description": "Deletes the manifest and all its translated output files (derivatives). However, it does not delete the design source file.",
+			"headers": [],
+			"isPrivate": false,
+			"metaSortKey": -1554920608235.7217,
+			"method": "DELETE",
+			"modified": 1556053940463,
+			"name": "Manifest EMEA",
+			"parameters": [],
+			"parentId": "wrk_14c1f697d34048febda71a840938f842",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingMaxTimelineDataSize": 1000,
+			"settingRebuildPath": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "https://developer.api.autodesk.com/modelderivative/v2/regions/eu/designdata/{{ urnBase64  }}/manifest",
+			"_type": "request"
+		},
+		{
+			"_id": "req_f52b3f5b2cde4faa8852bcfaba86af79",
+			"authentication": {
+				"token": "{{ 2_legged_token  }}",
+				"type": "bearer"
+			},
+			"body": {},
+			"created": 1556053966994,
+			"description": "Downloads a selected derivative. To download the file, you need to specify the file’s URN, which you retrieve by calling the GET :urn/manifest endpoint.\n\nNote that the Model Derivative API uses 2 types of URNs. The design URN is generated when you upload the source design file to Forge, and is used when calling most of the Model Derivative endpoints. A derivative URN is generated for each translated output file format, and is used for downloading the output design files.\n\nYou can set the range of bytes that are returned when downloading the derivative, using the range header.",
+			"headers": [],
+			"isPrivate": false,
+			"metaSortKey": -1554920620405.792,
+			"method": "GET",
+			"modified": 1556054445717,
+			"name": "Download Derivative US",
+			"parameters": [],
+			"parentId": "wrk_14c1f697d34048febda71a840938f842",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingMaxTimelineDataSize": 1000,
+			"settingRebuildPath": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "https://developer.api.autodesk.com/modelderivative/v2/designdata/{{ urnBase64  }}/manifest/{{derivativeurn}}",
+			"_type": "request"
+		},
+		{
+			"_id": "req_12d0838993484f36ba04e5d845cd72c9",
+			"authentication": {
+				"token": "{{ 2_legged_token  }}",
+				"type": "bearer"
+			},
+			"body": {},
+			"created": 1556054052427,
+			"description": "Downloads a selected derivative. To download the file, you need to specify the file’s URN, which you retrieve by calling the GET :urn/manifest endpoint.\n\nNote that the Model Derivative API uses 2 types of URNs. The design URN is generated when you upload the source design file to Forge, and is used when calling most of the Model Derivative endpoints. A derivative URN is generated for each translated output file format, and is used for downloading the output design files.\n\nYou can set the range of bytes that are returned when downloading the derivative, using the range header.",
+			"headers": [],
+			"isPrivate": false,
+			"metaSortKey": -1554920608160.7217,
+			"method": "GET",
+			"modified": 1556054092240,
+			"name": "Download Derivative EMEA",
+			"parameters": [],
+			"parentId": "wrk_14c1f697d34048febda71a840938f842",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingMaxTimelineDataSize": 1000,
+			"settingRebuildPath": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "https://developer.api.autodesk.com/modelderivative/v2/regions/eu/designdata/{{ urnBase64  }}/manifest/{{derivativeurn}}",
+			"_type": "request"
+		},
+		{
+			"_id": "req_c017af7d180a4cce96b3600d93a9e8cd",
+			"authentication": {
+				"token": "{{ 2_legged_token  }}",
+				"type": "bearer"
+			},
+			"body": {},
+			"created": 1556054113500,
+			"description": "Returns a list of model view (metadata) IDs for a design model. The metadata ID enables end users to select an object tree and properties for a specific model view.\n\nAlthough most design apps (e.g., Fusion and Inventor) only allow a single model view (object tree and set of properties), some apps (e.g., Revit) allow users to design models with multiple model views (e.g., HVAC, architecture, perspective).\n\nNote that you can only retrieve metadata from an input file that has been translated into an SVF file.",
+			"headers": [],
+			"isPrivate": false,
+			"metaSortKey": -1554920619201.2852,
+			"method": "GET",
+			"modified": 1556054447968,
+			"name": "Metadata US",
+			"parameters": [],
+			"parentId": "wrk_14c1f697d34048febda71a840938f842",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingMaxTimelineDataSize": 1000,
+			"settingRebuildPath": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "https://developer.api.autodesk.com/modelderivative/v2/designdata/{{ urnBase64  }}/metadata",
+			"_type": "request"
+		},
+		{
+			"_id": "req_f425e205ba614cc8bf6165a6579678cd",
+			"authentication": {
+				"token": "{{ 2_legged_token  }}",
+				"type": "bearer"
+			},
+			"body": {},
+			"created": 1556054169578,
+			"description": "Returns a list of model view (metadata) IDs for a design model. The metadata ID enables end users to select an object tree and properties for a specific model view.\n\nAlthough most design apps (e.g., Fusion and Inventor) only allow a single model view (object tree and set of properties), some apps (e.g., Revit) allow users to design models with multiple model views (e.g., HVAC, architecture, perspective).\n\nNote that you can only retrieve metadata from an input file that has been translated into an SVF file.",
+			"headers": [],
+			"isPrivate": false,
+			"metaSortKey": -1554920603417.6936,
+			"method": "GET",
+			"modified": 1556054194940,
+			"name": "Metadata EMEA",
+			"parameters": [],
+			"parentId": "wrk_14c1f697d34048febda71a840938f842",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingMaxTimelineDataSize": 1000,
+			"settingRebuildPath": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "https://developer.api.autodesk.com/modelderivative/v2/regions/eu/designdata/{{ urnBase64  }}/metadata",
+			"_type": "request"
+		},
+		{
+			"_id": "req_cc205b30d2ca42b0820e8176d0b8d8b4",
+			"authentication": {
+				"token": "{{ 2_legged_token  }}",
+				"type": "bearer"
+			},
+			"body": {},
+			"created": 1556054213421,
+			"description": "Returns an object tree, i.e., a hierarchical list of objects for a model view.\n\nTo call this endpoint you first need to call the GET :urn/metadata endpoint, to determine which model view (object tree and set of properties) to use.\n\nAlthough most design apps (e.g., Fusion and Inventor) only allow a single model view, some apps (e.g., Revit) allow users to design models with multiple model views (e.g., HVAC, architecture, perspective).\n\nNote that you can only retrieve metadata from an input file that has been translated into an SVF file.",
+			"headers": [],
+			"isPrivate": false,
+			"metaSortKey": -1554920618599.0317,
+			"method": "GET",
+			"modified": 1556054451646,
+			"name": "Metadata Object Tree US ",
+			"parameters": [],
+			"parentId": "wrk_14c1f697d34048febda71a840938f842",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingMaxTimelineDataSize": 1000,
+			"settingRebuildPath": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "https://developer.api.autodesk.com/modelderivative/v2/designdata/{{ urnBase64  }}/metadata/{{guid}}",
+			"_type": "request"
+		},
+		{
+			"_id": "req_48129a60f54a47429aada8cf63e7f95e",
+			"authentication": {
+				"token": "{{ 2_legged_token  }}",
+				"type": "bearer"
+			},
+			"body": {},
+			"created": 1556054285113,
+			"description": "Returns an object tree, i.e., a hierarchical list of objects for a model view.\n\nTo call this endpoint you first need to call the GET :urn/metadata endpoint, to determine which model view (object tree and set of properties) to use.\n\nAlthough most design apps (e.g., Fusion and Inventor) only allow a single model view, some apps (e.g., Revit) allow users to design models with multiple model views (e.g., HVAC, architecture, perspective).\n\nNote that you can only retrieve metadata from an input file that has been translated into an SVF file.",
+			"headers": [],
+			"isPrivate": false,
+			"metaSortKey": -1554920601046.1797,
+			"method": "GET",
+			"modified": 1556054306523,
+			"name": "Metadata Object Tree EMEA",
+			"parameters": [],
+			"parentId": "wrk_14c1f697d34048febda71a840938f842",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingMaxTimelineDataSize": 1000,
+			"settingRebuildPath": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "https://developer.api.autodesk.com/modelderivative/v2/regions/eu/designdata/{{ urnBase64  }}/metadata/{{guid}}",
+			"_type": "request"
+		},
+		{
+			"_id": "req_ee4535a08b484cba9e10470419b5e7a7",
+			"authentication": {
+				"token": "{{ 2_legged_token  }}",
+				"type": "bearer"
+			},
+			"body": {},
+			"created": 1556054333446,
+			"description": "Returns a list of properties for each object in an object tree. Properties are returned according to object ID and do not follow a hierarchical structure.\n\nTo call this endpoint you need to first call the GET :urn/metadata endpoint, which returns a list of model view (metadata) IDs for a design input model. Select a model view (metadata) ID to use when calling the Get Properties endpoint.\n\nNote that you can only get properties from a design input file that was previously translated into an SVF file.\n\n",
+			"headers": [],
+			"isPrivate": false,
+			"metaSortKey": -1554920618297.9048,
+			"method": "GET",
+			"modified": 1556054458398,
+			"name": "Metadata Object Tree Properties US  ",
+			"parameters": [],
+			"parentId": "wrk_14c1f697d34048febda71a840938f842",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingMaxTimelineDataSize": 1000,
+			"settingRebuildPath": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "https://developer.api.autodesk.com/modelderivative/v2/designdata/{{ urnBase64  }}/metadata/{{guid}}/properties",
+			"_type": "request"
+		},
+		{
+			"_id": "req_15706383f4ba48ce835fe47bf33e9e4d",
+			"authentication": {
+				"token": "{{ 2_legged_token  }}",
+				"type": "bearer"
+			},
+			"body": {},
+			"created": 1556054390851,
+			"description": "Returns a list of properties for each object in an object tree. Properties are returned according to object ID and do not follow a hierarchical structure.\n\nTo call this endpoint you need to first call the GET :urn/metadata endpoint, which returns a list of model view (metadata) IDs for a design input model. Select a model view (metadata) ID to use when calling the Get Properties endpoint.\n\nNote that you can only get properties from a design input file that was previously translated into an SVF file.\n\n",
+			"headers": [],
+			"isPrivate": false,
+			"metaSortKey": -1554920599860.4226,
+			"method": "GET",
+			"modified": 1556054414831,
+			"name": "Metadata Object Tree Properties EMEA",
+			"parameters": [],
+			"parentId": "wrk_14c1f697d34048febda71a840938f842",
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingMaxTimelineDataSize": 1000,
+			"settingRebuildPath": true,
+			"settingSendCookies": true,
+			"settingStoreCookies": true,
+			"url": "https://developer.api.autodesk.com/modelderivative/v2/regions/eu/designdata/{{ urnBase64  }}/metadata/{{guid}}/properties",
+			"_type": "request"
+		}
+	]
+}
